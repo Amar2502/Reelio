@@ -20,6 +20,7 @@ def download_file(url: str, dest_dir: str, scene_num: int, index: int):
         file_name = f"scene{scene_num}_{file_type}{index}{ext}"
         file_path = os.path.join(dest_dir, file_name)
 
+
         if os.path.exists(file_path):
             return file_path
 
