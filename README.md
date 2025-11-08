@@ -122,7 +122,7 @@ PIXABAY_API_KEY=your_pixabay_api_key_here
 
 ```bash
 $ python main.py
-Enter a prompt to generate a video: Explain quantum physics in simple terms
+Enter a prompt to generate a video: Make a video explaining Black Holes
 ```
 
 *Script workflow:*
