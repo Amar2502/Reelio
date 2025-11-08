@@ -7,6 +7,7 @@ import re
 import os
 import shutil
 from generate_video import generate_video
+from utils.project_directory import get_project_dir, get_final_video_path
 
 NEON_BLUE = "\033[38;2;0;255;255m"      # Cyan-like blue
 NEON_GREEN = "\033[38;2;57;255;20m"     # Bright green
@@ -96,15 +97,13 @@ def create_video_from_prompt(prompt: str):
         best_visuals[index-1] = new_path
     print(f"{NEON_GREEN}Visuals Renamed{RESET_COLOR}")
 
-    print(f"{NEON_BLUE}{response.title_suggestion}{RESET_COLOR}")
-    print(f"{NEON_BLUE}{response.description}{RESET_COLOR}")
-    print(f"{NEON_BLUE}{response.total_estimated_time}{RESET_COLOR}\n")
-    for scene in response.scenes:
-        print(f"{NEON_BLUE}{scene.keyword}{RESET_COLOR}")
-        print(f"{NEON_BLUE}{scene.voiceover}{RESET_COLOR}")
-        print(f"{NEON_BLUE}{scene.downloaded_files}{RESET_COLOR}")
-        print("\n")
-    print(f"{NEON_BLUE}{audio_path}{RESET_COLOR}")
+
+    print(f"{NEON_GREEN}Generating Video...{RESET_COLOR}")
+    generate_video(best_visuals, response.title_suggestion, audio_path)
+    print(f"{NEON_GREEN}Video Generated{RESET_COLOR}")
+
+    os.remove(audio_path)
+    shutil.rmtree(get_project_dir(response.title_suggestion))
 
 if __name__ == "__main__":
     prompt = input("Enter a prompt to generate a video: ")
