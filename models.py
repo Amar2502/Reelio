@@ -2,7 +2,6 @@ from pydantic import BaseModel, Field
 from typing import Literal, List
 
 class Scene(BaseModel):
-    visual_type: Literal["image", "video"] = Field(description="Type of visual (image or video)")
     voiceover: str = Field(description="Voiceover script for this scene")
     keyword: str = Field(description="Keyword for Pixabay search, keyowrds should be different for every scene")
     preview_urls: List[str] = Field(default_factory=list)
