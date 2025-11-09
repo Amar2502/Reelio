@@ -54,7 +54,7 @@ def generate_video(files: List[str], title: str, audio_path: str):
     # Export final video
     output_path = get_final_video_path(title)
     print(f"[💾] Saving final video to: {output_path}")
-    final_with_audio.write_videofile(output_path, fps=30, codec="libx264", audio_codec="aac", preset="superfast", threads=8)
+    final_with_audio.write_videofile(output_path, fps=30, codec="libx264", audio_codec="aac", preset="ultrafast", threads=8)
 
     # Cleanup
     audio.close()
