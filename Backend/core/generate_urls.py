@@ -1,5 +1,5 @@
 import requests
-from typing import Literal, List
+from typing import List
 from dotenv import load_dotenv
 import os
 

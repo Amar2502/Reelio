@@ -1,9 +1,12 @@
 from moviepy import VideoFileClip, concatenate_videoclips, AudioFileClip
 from moviepy.video.fx.Crop import Crop
 from typing import List
-from utils.project_directory import get_final_video_path
+from utils.project_directory import get_final_video_path, get_project_dir
+from models import ReelioVideoPlan
+import shutil 
 
 def generate_video(files: List[str], title: str, audio_path: str):
+
     # Load audio (voiceover)
     audio = AudioFileClip(audio_path)
     target_duration = audio.duration  # total video duration must match this
@@ -58,3 +61,19 @@ def generate_video(files: List[str], title: str, audio_path: str):
     audio.close()
     for clip in all_clips:
         clip.close()
+
+    shutil.rmtree(get_project_dir(title))
+
+    return output_path
+
+def get_video(response: ReelioVideoPlan):
+
+    selected_files = []
+    for scene in response.scenes:
+        selected_files.append(scene.downloaded_files[0])
+
+    output_path = generate_video(selected_files, response.title, response.audio_path)
+
+    response.final_video_path = output_path
+
+    return response
