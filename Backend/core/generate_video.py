@@ -24,8 +24,7 @@ def generate_video(files: List[str], title: str, audio_path: str):
         (w, h) = clip.size
         crop_effect = Crop(x_center=w/2, y_center=h/2, width=1080, height=h)
         cropped_clip = crop_effect.copy().apply(clip)
-        final_clip = cropped_clip.resized((1080, 1920))
-        all_clips.append(final_clip)
+        final_clip = cropped_clip.resized((720, 1280))
 
         # Ensure no clip is unnecessarily long (limit to 15s)
         if final_clip.duration > 15:
@@ -55,7 +54,7 @@ def generate_video(files: List[str], title: str, audio_path: str):
     # Export final video
     output_path = get_final_video_path(title)
     print(f"[💾] Saving final video to: {output_path}")
-    final_with_audio.write_videofile(output_path, fps=60, codec="libx264", audio_codec="aac")
+    final_with_audio.write_videofile(output_path, fps=30, codec="libx264", audio_codec="aac", preset="superfast", threads=8)
 
     # Cleanup
     audio.close()
