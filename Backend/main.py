@@ -22,24 +22,19 @@ def create_video_from_prompt(prompt: str):
 
     print(f"{NEON_GREEN}Generating Response...{RESET_COLOR}")
     response = structured_model.invoke(prompt)
-    print(f"{NEON_GREEN}Response Generated{RESET_COLOR}")
 
     print(f"{NEON_GREEN}Generating Preview URLs...{RESET_COLOR}")
     for scene in response.scenes:
         scene.preview_urls = get_pixabay_urls(scene.keyword)
-    print(f"{NEON_GREEN}Preview URLs Generated{RESET_COLOR}")
 
     print(f"{NEON_GREEN}Generating Accumulated Voiceover...{RESET_COLOR}")
     accumulated_voiceover = " ".join(scene.voiceover for scene in response.scenes)
-    print(f"{NEON_GREEN}Accumulated Voiceover Generated{RESET_COLOR}")
 
     print(f"{NEON_GREEN}Generating Audio...{RESET_COLOR}")
     audio_path = generate_speech(response.title_suggestion, accumulated_voiceover)
-    print(f"{NEON_GREEN}Audio Generated{RESET_COLOR}")
 
     print(f"{NEON_GREEN}Downloading Visuals...{RESET_COLOR}")
     downloaded_visuals = download_visuals(response.title_suggestion, response.scenes)
-    print(f"{NEON_GREEN}Visuals Downloaded{RESET_COLOR}")
 
 
     print(f"{NEON_GREEN}Grouping Visuals...{RESET_COLOR}")
@@ -49,7 +44,6 @@ def create_video_from_prompt(prompt: str):
             v for v in downloaded_visuals   
             if re.search(pattern, v)
     ]
-    print(f"{NEON_GREEN}Visuals Grouped{RESET_COLOR}")
 
     print(f"{NEON_GREEN}Select Best Visual For Each Scene...{RESET_COLOR}")
     best_visuals = []
@@ -68,13 +62,11 @@ def create_video_from_prompt(prompt: str):
                     print(f"{NEON_GREEN}Please enter a number between 1 and {len(scene.downloaded_files)}.{RESET_COLOR}")
             except ValueError:
                 print(f"{NEON_GREEN}Invalid input. Please enter a number.{RESET_COLOR}")
-    print(f"{NEON_GREEN}Best Visuals Selected{RESET_COLOR}")
 
     print(f"{NEON_GREEN}Deleting Unused Visuals...{RESET_COLOR}")
     for file in downloaded_visuals:
         if file not in best_visuals:
             os.remove(file)
-    print(f"{NEON_GREEN}Unused Visuals Deleted{RESET_COLOR}")
 
     for index, scene in enumerate(response.scenes):
         scene.downloaded_files = best_visuals[index]
@@ -95,7 +87,6 @@ def create_video_from_prompt(prompt: str):
         shutil.move(file_path, new_path)
         scene.downloaded_files = new_path
         best_visuals[index-1] = new_path
-    print(f"{NEON_GREEN}Visuals Renamed{RESET_COLOR}")
 
 
     print(f"{NEON_GREEN}Generating Video...{RESET_COLOR}")

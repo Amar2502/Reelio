@@ -1,5 +1,18 @@
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.log
+
+# Environments
 venv/
 .env
-outputs/
+
+# Outputs
+Backend/outputs/
+Backend/temp/
+
+# Node/Frontend
+frontend/node_modules/
+frontend/.next/
