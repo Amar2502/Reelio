@@ -18,9 +18,10 @@ def get_pixabay_urls(keyword: str) -> List[str]:
         data = response.json()
         hits = data.get("hits", [])
 
+
         if not hits:
             return []
         else:
-            return [hit["videos"]["large"]["url"] for hit in hits]
+            return [hit["videos"]["tiny"]["url"] for hit in hits]
     except Exception:
         return []
